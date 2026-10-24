@@ -47,3 +47,4 @@ Record the commands you run and what each failure means.
 - Frontend command: `npm test --prefix octofit-tracker/frontend` checks API-backed content and loading, empty, and accessible error states for each view. Baseline run: 15 failed; failures indicate incomplete UI integration or a presentation contract regression.
 - Backend build command: `npm run build --prefix octofit-tracker/backend` checks TypeScript compilation. Not run yet; failures indicate backend type errors that must be resolved before integration.
 - Frontend build command: `npm run build --prefix octofit-tracker/frontend` checks frontend TypeScript compilation and the Vite production bundle. Not run yet; failures indicate frontend type or bundling errors.
+
