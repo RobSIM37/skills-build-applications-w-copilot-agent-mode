@@ -8,6 +8,7 @@ type Workout = { title: string; focus: string; minutes: number; difficulty: stri
 export default function Workouts() {
   const [email, setEmail] = useState('mona@example.com');
   const [requestedEmail, setRequestedEmail] = useState('mona@example.com');
+  const [requestVersion, setRequestVersion] = useState(0);
   const [state, setState] = useState<ResourceState<Workout>>({ status: 'loading' });
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function Workouts() {
         if (active) setState({ status: 'error', message: error instanceof Error ? error.message : 'Unknown error' });
       });
     return () => { active = false; };
-    }, [requestedEmail]);
+    }, [requestedEmail, requestVersion]);
 
   return (
       <>
@@ -30,6 +31,7 @@ export default function Workouts() {
             event.preventDefault();
             setState({ status: 'loading' });
             setRequestedEmail(email.trim());
+            setRequestVersion((version) => version + 1);
           }}
         >
           <div className="col flex-grow-1">

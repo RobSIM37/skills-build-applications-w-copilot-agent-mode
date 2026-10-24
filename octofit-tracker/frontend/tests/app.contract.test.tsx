@@ -65,6 +65,20 @@ describe('OctoFit presentation contract', () => {
     await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent(/404/));
   });
 
+  it('retries a failed request when the same email is submitted again', async () => {
+    renderRoute('/workouts');
+    await screen.findByText(/Intervals/);
+    fireEvent.change(screen.getByRole('textbox', { name: /user email/i }), {
+      target: { value: 'nobody@example.com' },
+    });
+    const submit = screen.getByRole('button', { name: /get suggestions/i });
+    fireEvent.click(submit);
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent(/404/));
+    fireEvent.click(submit);
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(3));
+    expect(screen.getByRole('alert')).toHaveTextContent(/404/);
+  });
+
   for (const capability of capabilities) {
     describe(capability.route, () => {
       it('announces a loading state while the API request is pending', () => {
